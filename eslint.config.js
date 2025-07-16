@@ -1,17 +1,40 @@
-import js from "@eslint/js";
-import globals from "globals";
-import { defineConfig } from "eslint/config";
+import eslintPluginPrettier from 'eslint-plugin-prettier';
+import pluginNode from 'eslint-plugin-n';
+import importPlugin from 'eslint-plugin-import';
 
-export default defineConfig([
+export default [
   {
-    files: ["**/*.{js,mjs,cjs}"],
-    plugins: { js },
-    extends: ["plugin:js/recommended"],
+    files: ['**/*.js'],
     languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
       globals: {
-        ...globals.browser,
-        ...globals.node,
+        process: 'readonly',
+        console: 'readonly',
+        Buffer: 'readonly',
       },
     },
+    plugins: {
+      prettier: eslintPluginPrettier,
+      node: pluginNode,
+      import: importPlugin,
+    },
+    rules: {
+      'prettier/prettier': 'error',
+      'spaced-comment': 'off',
+      'no-console': 'warn',
+      'no-undef': 'error',
+      'consistent-return': 'off',
+      'import/no-unresolved': 'error',
+      'func-names': 'off',
+      'object-shorthand': 'off',
+      'no-process-exit': 'off',
+      'no-param-reassign': 'off',
+      'no-return-await': 'off',
+      'no-underscore-dangle': 'off',
+      'class-methods-use-this': 'off',
+      'prefer-destructuring': ['error', { object: true, array: false }],
+      'no-unused-vars': ['error', { argsIgnorePattern: 'req|res|next|val' }],
+    },
   },
-]);
+];

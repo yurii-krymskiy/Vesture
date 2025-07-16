@@ -1,11 +1,25 @@
-import 'dotenv/config'
+import 'dotenv/config';
 import express from 'express';
 import connectDB from './config/mongodb.js';
+import cors from 'cors';
+import userRouter from './routes/userRoute.js';
 
 const app = express();
+const port = process.env.PORT || 4000;
 
 connectDB();
 
-const port = process.env.PORT || 4000;
+// middlewares
+app.use(express.json());
+app.use(cors());
 
-app.listen(port, () => console.log('Server started on PORT : ' + port));
+// api endpoints
+app.get('/', (req, res) => {
+  res.send('API Working');
+});
+
+app.use('/api/user', userRouter);
+
+app.listen(port, () => {
+  console.log('Server started on PORT : ' + port);
+});
