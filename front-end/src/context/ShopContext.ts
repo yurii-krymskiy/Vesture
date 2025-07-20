@@ -8,10 +8,15 @@ type CartItemsType = {
 
 export type ProductType = {
   _id: string;
+  name: string;
+  description: string,
   price: number;
   image: string[];
-  name: string;
-  bestseller: boolean
+  category: string;
+  subCategory: string;
+  sizes: string[];
+  date: number;
+  bestseller: boolean;
 };
 
 export type ShopContextType = {

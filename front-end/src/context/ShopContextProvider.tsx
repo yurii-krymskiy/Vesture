@@ -2,7 +2,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios'
-import { ShopContext } from "./ShopContext";
+import { ShopContext, type ProductType } from "./ShopContext";
 
 const ShopContextProvider = (props: { children: ReactNode }) => {
   const currency = '$';
@@ -17,10 +17,7 @@ const ShopContextProvider = (props: { children: ReactNode }) => {
   };
 
   const [cartItems, setCartItems] = useState<CartItemsType>({});
-  type ProductType = {
-    _id: string;
-    price: number;
-  };
+
 
   const [products, setProducts] = useState<ProductType[]>([]);
   const [token, setToken] = useState('')
