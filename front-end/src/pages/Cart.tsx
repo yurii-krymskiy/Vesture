@@ -8,10 +8,9 @@ const Cart = () => {
 
   const { products, currency, cartItems, updateQuantity, navigate } = useContext(ShopContext);
 
-  const [cartData, setCartData] = useState<{_id: string, size: number, quantity: number}[]>([]);
+  const [cartData, setCartData] = useState<{_id: string, size: string, quantity: number}[]>([]);
 
   useEffect(() => {
-
     if (products.length > 0) {
       const tempData = [];
       for (const items in cartItems) {
@@ -19,7 +18,7 @@ const Cart = () => {
           if (cartItems[items][item] > 0) {
             tempData.push({
               _id: items,
-              size: Number(item),
+              size: item,
               quantity: cartItems[items][item]
             })
           }
@@ -39,7 +38,6 @@ const Cart = () => {
       <div>
         {
           cartData.map((item, index) => {
-
             const productData = products.find((product) => product._id === item._id);
             if (!productData) return
             return (
@@ -54,11 +52,10 @@ const Cart = () => {
                     </div>
                   </div>
                 </div>
-                <input onChange={(e) => e.target.value === '' || e.target.value === '0' ? null : updateQuantity(+item._id, item.size, Number(e.target.value))} className='border max-w-10 sm:max-w-20 px-1 sm:px-2 py-1' type="number" min={1} defaultValue={item.quantity} />
-                <img onClick={() => updateQuantity(+item._id, item.size, 0)} className='w-4 mr-4 sm:w-5 cursor-pointer' src={assets.bin_icon} alt="" />
+                <input onChange={(e) => e.target.value === '' || e.target.value === '0' ? null : updateQuantity(item._id, item.size, Number(e.target.value))} className='border max-w-10 sm:max-w-20 px-1 sm:px-2 py-1' type="number" min={1} defaultValue={item.quantity} />
+                <img onClick={() => updateQuantity(item._id, item.size, 0)} className='w-4 mr-4 sm:w-5 cursor-pointer' src={assets.bin_icon} alt="" />
               </div>
             )
-
           })
         }
       </div>

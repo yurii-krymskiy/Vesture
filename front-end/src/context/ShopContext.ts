@@ -1,7 +1,7 @@
 import { createContext } from "react";
 
-type CartItemsType = {
-  [itemId: number]: {
+export type CartItemsType = {
+  [itemId: string]: {
     [size: string]: number;
   };
 };
@@ -28,10 +28,10 @@ export type ShopContextType = {
   showSearch: boolean;
   setShowSearch: React.Dispatch<React.SetStateAction<boolean>>;
   cartItems: CartItemsType;
-  addToCart: (itemId: number, size: number) => void;
+  addToCart: (itemId: string, size: string) => void;
   setCartItems: React.Dispatch<React.SetStateAction<CartItemsType>>;
   getCartCount: () => number;
-  updateQuantity: (itemId: number, size: number, quantity: number) => void;
+  updateQuantity: (itemId: string, size: string, quantity: number) => void;
   getCartAmount: () => number;
   navigate: (path: string) => void;
   backendUrl: string;

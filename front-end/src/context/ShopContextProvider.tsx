@@ -2,7 +2,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios'
-import { ShopContext, type ProductType } from "./ShopContext";
+import { ShopContext, type CartItemsType, type ProductType } from "./ShopContext";
 
 const ShopContextProvider = (props: { children: ReactNode }) => {
   const currency = '$';
@@ -10,21 +10,13 @@ const ShopContextProvider = (props: { children: ReactNode }) => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL
   const [search, setSearch] = useState('');
   const [showSearch, setShowSearch] = useState(false);
-  type CartItemsType = {
-    [itemId: number]: {
-      [size: string]: number;
-    };
-  };
-
   const [cartItems, setCartItems] = useState<CartItemsType>({});
-
 
   const [products, setProducts] = useState<ProductType[]>([]);
   const [token, setToken] = useState('')
   const navigate = useNavigate();
 
-
-  const addToCart = async (itemId: number, size: number) => {
+  const addToCart = async (itemId: string, size: string) => {
     if (!size) {
       toast.error('Select Product Size');
       return;
@@ -48,9 +40,7 @@ const ShopContextProvider = (props: { children: ReactNode }) => {
 
     if (token) {
       try {
-
         await axios.post(backendUrl + '/api/cart/add', { itemId, size }, { headers: { token } })
-
       } catch (error: unknown) {
         console.log(error)
         toast.error((error && typeof error === 'object' && 'message' in error) ? (error as { message: string }).message : 'An error occurred')
@@ -75,8 +65,7 @@ const ShopContextProvider = (props: { children: ReactNode }) => {
     return totalCount;
   }
 
-  const updateQuantity = async (itemId: number, size: number, quantity: number) => {
-
+  const updateQuantity = async (itemId: string, size: string, quantity: number) => {
     const cartData = structuredClone(cartItems);
 
     cartData[itemId][size] = quantity;
@@ -93,7 +82,6 @@ const ShopContextProvider = (props: { children: ReactNode }) => {
         toast.error((error && typeof error === 'object' && 'message' in error) ? (error as { message: string }).message : 'An error occurred')
       }
     }
-
   }
 
   const getCartAmount = () => {
@@ -115,7 +103,6 @@ const ShopContextProvider = (props: { children: ReactNode }) => {
 
   const getProductsData = async () => {
     try {
-
       const response = await axios.get(backendUrl + '/api/product/list')
       if (response.data.success) {
         setProducts(response.data.products.reverse())
