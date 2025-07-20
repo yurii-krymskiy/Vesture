@@ -6,9 +6,12 @@ type CartItemsType = {
   };
 };
 
-type ProductType = {
+export type ProductType = {
   _id: string;
   price: number;
+  image: string[];
+  name: string;
+  bestseller: boolean
 };
 
 export type ShopContextType = {
