@@ -1,4 +1,3 @@
-import React from 'react'
 import { assets } from '../assets/assets.ts'
 
 const Navbar = ({ setToken }: { setToken: (v: string) => void }) => {
