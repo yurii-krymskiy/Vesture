@@ -40,11 +40,9 @@ const List = ({ token }: { token: string | null }) => {
     }
   }
 
-  const removeProduct = async (id: number) => {
+  const removeProduct = async (id: string) => {
     try {
-
       const response = await axios.post(import.meta.env.VITE_BACKEND_URL + '/api/product/remove', { id }, { headers: { token } })
-
       if (response.data.success) {
         toast.success(response.data.message)
         await fetchList();
@@ -84,7 +82,7 @@ const List = ({ token }: { token: string | null }) => {
               <p>{item.name}</p>
               <p>{item.category}</p>
               <p>{currency}{item.price}</p>
-              <p onClick={() => removeProduct(+item._id)} className='text-right md:text-center cursor-pointer text-lg'>X</p>
+              <p onClick={() => removeProduct(item._id)} className='text-right md:text-center cursor-pointer text-lg'>X</p>
             </div>
           ))
         }
