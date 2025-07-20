@@ -1,7 +1,6 @@
 {
-  "name": "vesture",
+  "name": "back-end",
   "version": "1.0.0",
-  "description": "e-commerce",
   "main": "server.js",
   "type": "module",
   "scripts": {
